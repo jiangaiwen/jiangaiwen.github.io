@@ -1,0 +1,47 @@
+@charset "utf-8";
+@import './_variable.scss';
+
+$font_default_color: $font-color-shallow3;
+$font_default_size: $font_medium_s;
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    color: $font_default_color;
+}
+
+a {
+    outline: none;
+    text-decoration: none;
+    color: $font_default_color;
+    transition: color .3s;
+    background-color: transparent;
+}
+
+img{
+    border-style: none;
+    vertical-align: middle;
+}
+
+ul, li {
+    list-style: none;
+}
+
+.flex {
+    display: inline-flex;
+    display: -webkit-flex;
+    display: flex;
+}
+
+.flex-middle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.clear::after{
+    content: '';
+    overflow: hidden;
+    clear: both;
+}

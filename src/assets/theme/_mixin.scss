@@ -1,0 +1,48 @@
+@charset "utf-8";
+@import "./_variable.scss"; /*引入配置*/
+
+@mixin font_size($size) {
+    @include font-dpr($size);
+}
+
+@mixin font_color($color) { /*通过该函数设置主题颜色，后期方便统一管理；*/
+    color: $color;
+    [data-theme="light"] & {
+        color: $font-color-light;
+    }
+    [data-theme="dark"] & {
+        color: $font-color-dark;
+    }
+}
+
+@mixin bg_color($color) { /*通过该函数设置主题颜色，后期方便统一管理；*/
+    background-color: $color;
+    [data-theme="light"] & {
+        background-color: $background-color-light;
+    }
+    [data-theme="dark"] & {
+        background-color: $background-color-dark;
+    }
+}
+
+@mixin font-dpr($font-size) {
+    font-size: $font-size;
+    [data-dpr="2"] & { font-size: $font-size * 2;}
+    [data-dpr="3"] & { font-size: $font-size * 3;}
+}
+
+@mixin overflow($num:1, $fontSize:0, $lineHeight:1.5) {
+    display: -webkit-box;
+    -webkit-line-clamp: $num;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    @if $fontSize!=0 and $lineHeight {
+        line-height: $lineHeight;
+        @if $lineHeight<1.2 {
+            line-height: 1.2;
+        }
+        height: $num * $fontSize * $lineHeight;
+        [data-dpr="2"] & { height: $num * $fontSize * $lineHeight * 2!important;}
+        [data-dpr="3"] & { height: $num * $fontSize * $lineHeight * 3!important;}
+    }
+}

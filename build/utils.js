@@ -54,13 +54,31 @@ exports.cssLoaders = function (options) {
     }
   }
 
+  let sassResourcePaths = [
+    path.resolve(__dirname, '../src/assets/theme/_mixin.scss'),
+  ]
+
   // https://vue-loader.vuejs.org/en/configurations/extract-css.html
   return {
     css: generateLoaders(),
     postcss: generateLoaders(),
     less: generateLoaders('less'),
-    sass: generateLoaders('sass', { indentedSyntax: true }),
-    scss: generateLoaders('sass'),
+    sass: generateLoaders('sass', { indentedSyntax: true }).concat(
+      {
+        loader: 'sass-resources-loader',
+        options: {
+          resources: sassResourcePaths
+        }
+      }
+    ),
+    scss: generateLoaders('sass').concat(
+      {
+        loader: 'sass-resources-loader',
+        options: {
+          resources: sassResourcePaths
+        }
+      }
+    ),
     stylus: generateLoaders('stylus'),
     styl: generateLoaders('stylus')
   }

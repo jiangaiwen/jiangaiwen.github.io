@@ -1,8 +1,9 @@
 <template>
-    <div class="home" style="text-align:center;color:#000;font-size:18px;font-weight:500;margin-top:20%;">
-        <p>爸爸爱你</p>
-        <img src="@/assets/比心.png" style="vertical-align: bottom;">
-        <p>{{device}}</p>
+    <div class="home">
+        <p style="text-align:center;color:#000;font-size:18px;font-weight:500;padding-top: 20%;">{{device}}</p>
+
+        <router-link to="/theme">修改主题</router-link>
+        <router-link to="/about">关于</router-link>
     </div>
 </template>
 <script>

@@ -1,7 +1,8 @@
 const app = {
     state: {
         device: 'desktop',
-        layout: ''
+        layout: '',
+        theme: 'light'
     },
     mutations: {
         TOGGLE_DEVICE: (state, device) => {
@@ -9,6 +10,9 @@ const app = {
         },
         TOGGLE_LAYOUT_MODE: (state, layout) => {
             state.layout = layout
+        },
+        TOGGLE_THEME: (state, theme) => {
+            state.theme = theme
         }
     },
     actions: {
@@ -17,6 +21,9 @@ const app = {
         },
         ToggleLayoutMode ({ commit }, mode) {
             commit('TOGGLE_LAYOUT_MODE', mode)
+        },
+        ToggleTheme ({ commit }, theme) {
+            commit('TOGGLE_THEME', theme)
         }
     }
 }

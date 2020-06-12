@@ -1,26 +1,66 @@
 <template>
     <div class="about">
-        <ul class="navs">
-            <li v-for="(item, index) in aboutNavs" :key="index" :class="{active: active===index}" @click="scrollTo(index)">{{ item }}</li>
-        </ul>
-        <div class="content">
+        <nav class="navbar">
+            <div class="container flex">
+                <div class="navbar-logo">
+                    <router-link to="/">LOGO</router-link>
+                </div>
+                <div class="navbar-right">
+                    <ul class="navbar-nav flex">
+                        <li 
+                            v-for="(item, index) in aboutNavs" 
+                            :key="index" 
+                            :class="{active: active===index}" 
+                            @click="scrollTo(index)">
+                            <a>{{ item }}</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+        </nav>
+        <div class="about-content">
             <!-- 基本资料 -->
-            <div style="height:800px;">
-                基本资料
+            <div class="info" style="height:800px;">
+                <div class="container">
+                    <div class="title">基本资料</div>
+                </div>
             </div>
 
             <!-- 项目经验 -->
-            <div style="height:800px;">
-                项目经验
+            <div class="project">
+                <div class="container">
+                    <div class="title">项目经验</div>
+                    <div class="project-content flex">
+                        <div class="flex-item" v-for="(item, index) in project" :key="index">
+                            <div class="project-item">
+                                <a :href="item.link" target="_blank">
+                                    <div class="hover-bg">
+                                        <div class="hover-text">
+                                            <h4>{{ item.title }}</h4>
+                                            <p>{{ item.desc }}</p>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                        <img class="responsive" :src="item.src" :alt="item.title">
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- 专业技能 -->
-            <div style="height:800px;">
-                专业技能
+            <div class="skills" style="height:800px;">
+                <div class="container">
+                    <div class="title">专业技能</div>
+                </div>
             </div>
+
             <!-- 工作经历 -->
             <div class="experience">
                 <div class="container">
+                    <div class="title">工作经历</div>
                     <div class="wrapper flex">
                         <div class="flex-item">
                             <div class="card">
@@ -57,17 +97,22 @@
             </div>
 
             <!-- 自我评价 -->
-            <div style="height:800px;">
-                自我评价
+            <div class="evaluate">
+                <div class="container">
+                    <div class="title">自我评价</div>
+                </div>
             </div>
 
             <!-- 联系方式 -->
             <div class="contact">
-                联系方式
-                <!--  v-if="device!='mobile'" -->
-                <div class="about-map">
-                    <iframe class="iframe" src="/static/partials/map.html"></iframe>
+                <div class="container">
+                    <div class="title">联系方式</div>
+                    <!--  v-if="device!='mobile'" -->
+                    <div class="about-map">
+                        <iframe class="iframe" src="/static/partials/map.html"></iframe>
+                    </div>
                 </div>
+                
             </div>
         </div>
         
@@ -79,7 +124,48 @@ export default {
     data() {
         return {
             active: 0,
-            aboutNavs: ['基本资料', '项目经验', '专业技能', '工作经历', '自我评价', '联系方式']
+            aboutNavs: ['基本资料', '项目经验', '专业技能', '工作经历', '自我评价', '联系方式'],
+            project: [{
+                id: 1,
+                title: '云算力合约平台',
+                src: require('../../../static/images/screenshots/btchash.vip.png'),
+                desc: 'Vue+ Element UI + Echarts'
+            },{
+                id: 2,
+                title: '云算力合约平台',
+                src: require('../../../static/images/screenshots/btchash.vip.png'),
+                desc: 'Vue+ Element UI + Echarts'
+            },{
+                id: 3,
+                title: '云算力合约平台',
+                src: require('../../../static/images/screenshots/btchash.vip.png'),
+                desc: 'Vue+ Element UI + Echarts'
+            },{
+                id: 4,
+                title: '云算力合约平台',
+                src: require('../../../static/images/screenshots/btchash.vip.png'),
+                desc: 'Vue+ Element UI + Echarts'
+            },{
+                id: 5,
+                title: '云算力合约平台',
+                src: require('../../../static/images/screenshots/btchash.vip.png'),
+                desc: 'Vue+ Element UI + Echarts'
+            },{
+                id: 6,
+                title: '云算力合约平台',
+                src: require('../../../static/images/screenshots/btchash.vip.png'),
+                desc: 'Vue+ Element UI + Echarts'
+            },{
+                id: 7,
+                title: '云算力合约平台',
+                src: require('../../../static/images/screenshots/btchash.vip.png'),
+                desc: 'Vue+ Element UI + Echarts'
+            },{
+                id: 8,
+                title: '云算力合约平台',
+                src: require('../../../static/images/screenshots/btchash.vip.png'),
+                desc: 'Vue+ Element UI + Echarts'
+            }]
         }
     },
     computed: {
@@ -96,7 +182,7 @@ export default {
     methods: {
         // 滚动监听
         onScroll() {
-            const navContents = document.querySelectorAll('.content div');
+            const navContents = document.querySelectorAll('.about-content>div');
             const offsetTopArr = []
             navContents.forEach(item => {
                 offsetTopArr.push(item.offsetTop)
@@ -118,7 +204,7 @@ export default {
         scrollTo(index) {
             // 获取目标的 offsetTop
             // css选择器是从 1 开始计数，我们是从 0 开始，所以要 +1
-            const targetOffsetTop = document.querySelector(`.content div:nth-child(${index + 1})`).offsetTop
+            const targetOffsetTop = document.querySelector(`.about-content>div:nth-child(${index + 1})`).offsetTop
             
             let scrollTop = document.documentElement.scrollTop || document.body.scrollTop
             // 定义一次跳 50 个像素，数字越大跳得越快，但是会有掉帧得感觉
@@ -169,42 +255,184 @@ export default {
 </script>
 <style lang="scss" scoped>
 .about{
-    .navs{
+    .container{
+        position: relative;
+        width: 1200px;
+        margin: 0 auto;
+        .title{
+            text-align: center;
+            font-weight: 400;
+            font-size: $font_large;
+            margin-bottom: 30px;
+        }
+    }
+    // 导航
+    .navbar{
         position: fixed;
+        width: 100%;
         top: 0;
         left: 0;
-        background-color: #efefef;
-        display: flex;
-        li{
-            padding: 0 20px;
-            &.active{
-                color: #847ec3;
-                background-color: #e2e2e2;
+        z-index: 1000;
+        // border-bottom: 0;
+        // letter-spacing: 1px;
+        // text-transform: uppercase;
+        // padding: 0;
+        background: #000;
+        transition: background .5s ease-in-out, padding .5s ease-in-out;
+        .container{
+            justify-content: space-between;
+            .navbar-logo{
+                cursor: pointer;
+                font-size: $font_medium;
+                padding: 10px 15px;
+                line-height: 20px;
+                a{
+                    color: #fff;
+                }
+            }
+            .navbar-right{
+                .navbar-nav{
+                    li{
+                        a{
+                            font-size: $font_medium_s;
+                            cursor: pointer;
+                            position: relative;
+                            display: block;
+                            padding: 10px 15px;
+                            color: #fff;
+                            line-height: 20px;
+                            transition: background .3s ease-in-out;
+                        }
+                        &.active{
+                            color: #F4D03F;
+                            background-color: transparent;
+                        }
+                        &:hover{
+                            a{
+                                color: #F4D03F;
+                                background-color: transparent;
+                            }
+                        }
+                    }
+                }
             }
         }
     }
-    .content{
-        width: 100%;
-        background-color: #fff;
-        div{
-            width: 100%;
+    
+    .about-content{
+        @include bg_color($background-color-light);
+
+        // 项目经验
+        .project{
+            position: relative;
+            .container{
+                .title{
+                    text-align: center;
+                    font-weight: 400;
+                    font-size: $font_large;
+                    margin-bottom: 30px;
+                }
+                .project-content{
+                    position: relative;
+                    overflow: hidden;
+                    flex-flow: row wrap;
+                    .flex-item{
+                        width: 25%;
+                        padding-right: 15px;
+                        padding-left: 15px;
+                        backface-visibility: hidden;
+                        transition-property: transform, opacity;
+                        transform: translate3d(0px, 0px, 0px);
+                        transition-duration: 0.8s;
+                        .project-item{
+                            margin-bottom: 30px;
+                            transition: all 0.5s ease-out;
+                            a{
+                                cursor: pointer;
+                                @include font_color($font-color-light);
+                            }
+                            &:hover{
+                                transform: scale(1.2);
+                            }
+                            .hover-bg{
+                                position: relative;
+                                height: 180px;
+                                overflow: hidden;
+                                .hover-text{
+                                    position: absolute;
+                                    text-align: center;
+                                    margin: 0 auto;
+                                    background: rgba(0, 0, 0, 0.66);
+                                    padding: 25% 0;
+                                    height: 100%;
+                                    width: 100%;
+                                    opacity: 0;
+                                    transition: all 0.5s;
+                                    h4{
+                                        opacity: 0;
+                                        color: #fff;
+                                        transform: translateY(100%);
+                                        transition: all 0.3s;
+                                    }
+                                    p{
+                                        opacity: 0;
+                                        color: #fff;
+                                        transform: translateY(0);
+                                        transition: all 0.3s;
+                                        font-size: $font_medium_s;
+                                    }
+                                }
+                                &:hover{
+                                    .hover-text{
+                                        opacity: 1;
+                                        h4{
+                                            opacity: 1;
+                                            transform: translateY(0);
+                                        }
+                                        p{
+                                            opacity: 1;
+                                            transform: translateY(100%);
+                                        }
+                                    }
+                                }
+                                img{
+                                    display: block;
+                                    max-width: 100%;
+                                    height: auto;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
+
+        // 工作经历
         .experience{
             position: relative;
-            height: 450px;
+            height: 850px;
             margin: auto;
+            background-color: #fafbfd;
             .container{
-                position: relative;
-                width: 1200px;
                 height: 100%;
-                margin-left: auto;
-                margin-right: auto;
                 padding-bottom: 150px;
+                .title{
+                    text-align: center;
+                    font-weight: 400;
+                    font-size: $font_large;
+                    margin-bottom: 30px;
+                    padding-top: 100px;
+                }
                 .wrapper{
-                    position: absolute;
+                    position: relative;
                     width: 100%;
+                    height: 400px;
+                    z-index: 10;
+                    margin-top: 57px;
                     .flex-item{
                         height: fit-content;
+                        padding-left: 6px;
+                        padding-right: 6px;
                         .card{
                             background-color: #fff;
                             margin-top: 0;
@@ -255,6 +483,12 @@ export default {
                 }
             }
         }
+
+        // 自我评价
+        .evaluate{
+            height: 800px;
+        }
+        // 联系方式
         .contact{
             height: 500px;
             .about-map{

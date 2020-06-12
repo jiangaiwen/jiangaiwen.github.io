@@ -9,9 +9,9 @@ export default new Router({
         name: 'home',
         component: () => import('@/views/home')
     },{
-        path: '/theme',
-        name: 'theme',
-        component: () => import('@/views/theme')
+        path: '/gank',
+        name: 'gank',
+        component: () => import('@/views/gank')
     },{
         path: '/about',
         name: 'about',

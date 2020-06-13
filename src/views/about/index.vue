@@ -41,7 +41,7 @@
                                             <p>{{ item.desc }}</p>
                                             <div class="clearfix"></div>
                                         </div>
-                                        <img class="responsive" :src="item.src" :alt="item.title">
+                                        <img class="responsive" :src="`/static/images/screenshots/${item.src}`" :alt="item.title">
                                     </div>
                                 </a>
                             </div>
@@ -120,52 +120,13 @@
 </template>
 <script>
 import { mapState } from 'vuex';
+import { project } from '@/core/data';
 export default {
     data() {
         return {
             active: 0,
             aboutNavs: ['基本资料', '项目经验', '专业技能', '工作经历', '自我评价', '联系方式'],
-            project: [{
-                id: 1,
-                title: '云算力合约平台',
-                src: require('../../../static/images/screenshots/btchash.vip.png'),
-                desc: 'Vue+ Element UI + Echarts'
-            },{
-                id: 2,
-                title: '云算力合约平台',
-                src: require('../../../static/images/screenshots/btchash.vip.png'),
-                desc: 'Vue+ Element UI + Echarts'
-            },{
-                id: 3,
-                title: '云算力合约平台',
-                src: require('../../../static/images/screenshots/btchash.vip.png'),
-                desc: 'Vue+ Element UI + Echarts'
-            },{
-                id: 4,
-                title: '云算力合约平台',
-                src: require('../../../static/images/screenshots/btchash.vip.png'),
-                desc: 'Vue+ Element UI + Echarts'
-            },{
-                id: 5,
-                title: '云算力合约平台',
-                src: require('../../../static/images/screenshots/btchash.vip.png'),
-                desc: 'Vue+ Element UI + Echarts'
-            },{
-                id: 6,
-                title: '云算力合约平台',
-                src: require('../../../static/images/screenshots/btchash.vip.png'),
-                desc: 'Vue+ Element UI + Echarts'
-            },{
-                id: 7,
-                title: '云算力合约平台',
-                src: require('../../../static/images/screenshots/btchash.vip.png'),
-                desc: 'Vue+ Element UI + Echarts'
-            },{
-                id: 8,
-                title: '云算力合约平台',
-                src: require('../../../static/images/screenshots/btchash.vip.png'),
-                desc: 'Vue+ Element UI + Echarts'
-            }]
+            project
         }
     },
     computed: {
@@ -356,14 +317,14 @@ export default {
                             }
                             .hover-bg{
                                 position: relative;
-                                height: 180px;
+                                height: 152px;
                                 overflow: hidden;
                                 .hover-text{
                                     position: absolute;
                                     text-align: center;
                                     margin: 0 auto;
                                     background: rgba(0, 0, 0, 0.66);
-                                    padding: 25% 0;
+                                    padding: 17% 0;
                                     height: 100%;
                                     width: 100%;
                                     opacity: 0;

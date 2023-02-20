@@ -1,0 +1,1 @@
+import{_ as e}from"./index.ab3890bb.js";import{d as o,o as t,f as r}from"./vue.1157ea36.js";const n=o({setup(){}});function s(a,c,p,u,f,_){return t(),r("div",null," \u8BBE\u5907\u5217\u8868 ")}var l=e(n,[["render",s]]);export{l as default};

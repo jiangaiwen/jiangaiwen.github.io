@@ -1,0 +1,1 @@
+import{_ as s}from"./index.ab3890bb.js";import{o as e,f as o}from"./vue.1157ea36.js";const r={},c={class:"as"};function t(a,_){return e(),o("div",c," \u9879\u76EE\u5206\u7EC4sssssss ")}var i=s(r,[["render",t]]);export{i as default};

@@ -1,0 +1,233 @@
+<template>
+    <!-- Icon -->
+    <Icon class="ba-icon-dark" v-if="field.render == 'icon'" :name="fieldValue ? fieldValue : field.default ?? ''" />
+
+    <!-- switch -->
+    <el-switch
+        v-if="field.render == 'switch'"
+        @change="onChangeField"
+        :model-value="fieldValue.toString()"
+        :loading="row.loading"
+        active-value="1"
+        inactive-value="0"
+    />
+
+    <!-- image -->
+    <div v-if="field.render == 'image' && fieldValue" class="ba-render-image">
+        <el-image
+            :hide-on-click-modal="true"
+            :preview-teleported="true"
+            :preview-src-list="[fullUrl(fieldValue)]"
+            :src="fullUrl(fieldValue)"
+        ></el-image>
+    </div>
+
+    <!-- images -->
+    <div v-if="field.render == 'images'" class="ba-render-image">
+        <template v-if="Array.isArray(fieldValue) && fieldValue.length">
+            <el-image
+                v-for="(item, idx) in fieldValue"
+                :key="idx"
+                :initial-index="idx"
+                :preview-teleported="true"
+                :preview-src-list="arrayFullUrl(fieldValue)"
+                class="images-item"
+                :src="fullUrl(item)"
+                :hide-on-click-modal="true"
+            ></el-image>
+        </template>
+    </div>
+
+    <!-- tag -->
+    <div v-if="field.render == 'tag' && fieldValue !== ''">
+        <el-tag :type="getTagType(fieldValue, field.custom)" :effect="field.effect ?? 'light'" :size="field.size ?? 'default'">{{
+            field.replaceValue ? field.replaceValue[fieldValue] : fieldValue
+        }}</el-tag>
+    </div>
+
+    <!-- tags -->
+    <div v-if="field.render == 'tags'">
+        <template v-if="Array.isArray(fieldValue)">
+            <template v-for="(tag, idx) in fieldValue" :key="idx">
+                <el-tag
+                    v-if="tag"
+                    class="m-10"
+                    :type="getTagType(tag, field.custom)"
+                    :effect="field.effect ?? 'light'"
+                    :size="field.size ?? 'default'"
+                >
+                    {{ field.replaceValue ? field.replaceValue[tag] ?? tag : tag }}</el-tag
+                >
+            </template>
+        </template>
+        <template v-else>
+            <el-tag
+                class="m-10"
+                v-if="fieldValue !== ''"
+                :type="getTagType(fieldValue, field.custom)"
+                :effect="field.effect ?? 'light'"
+                :size="field.size ?? 'default'"
+            >
+                {{ field.replaceValue ? field.replaceValue[fieldValue] ?? fieldValue : fieldValue }}</el-tag
+            >
+        </template>
+    </div>
+
+    <!-- url -->
+    <div v-if="field.render == 'url' && fieldValue">
+        <el-input :model-value="fieldValue" placeholder="Link address">
+            <template #append>
+                <el-button
+                    @click="typeof field.click == 'function' ? field.click(row, field, fieldValue, column, index) : openUrl(fieldValue, field)"
+                >
+                    <Icon :color="'#606266'" name="el-icon-Position" />
+                </el-button>
+            </template>
+        </el-input>
+    </div>
+
+    <!-- datetime -->
+    <div v-if="field.render == 'datetime'">
+        {{ !fieldValue ? '-' : timeFormat(fieldValue, field.timeFormat ?? undefined) }}
+    </div>
+
+    <!-- color -->
+    <div v-if="field.render == 'color'">
+        <div :style="{ background: fieldValue }" class="ba-render-color"></div>
+    </div>
+
+    <!-- customTemplate 自定义模板 -->
+    <div v-if="field.render == 'customTemplate'"
+        v-html="field.customTemplate ? field.customTemplate(row, field, fieldValue, column, index) : ''"
+    ></div>
+
+    <!-- 自定义组件/函数渲染 -->
+    <component
+        v-if="field.render == 'customRender'"
+        :is="field.customRender"
+        :renderRow="row"
+        :renderField="field"
+        :renderValue="fieldValue"
+        :renderColumn="column"
+        :renderIndex="index"
+    />
+
+    <!-- 按钮组 -->
+    <div v-if="field.render == 'buttons' && field.buttons">
+        <template v-for="(btn, idx) in field.buttons" :key="idx">
+            <template v-if="btn.display ? btn.display(row, field) : true">
+                <el-tooltip
+                    v-if="btn.render == 'tipButton'"
+                    :disabled="btn.title ? false : true"
+                    :content="btn.title ? btn.title : ''"
+                    placement="top"
+                >
+                    <el-button
+                        v-if="btn.name == 'edit'"
+                        v-auth="'edit'"
+                        v-blur
+                        @click="onButtonClick(btn)"
+                        :class="btn.class"
+                        class="table-operate"
+                        :type="btn.type"
+                        :disabled="btn.disabled && btn.disabled(row, field)"
+                        v-bind="btn.attr"
+                    >
+                        <Icon :name="btn.icon" />
+                        <div v-if="btn.text" class="table-operate-text">{{ btn.text }}</div>
+                    </el-button>
+                    <el-button
+                        v-else
+                        v-blur
+                        @click="onButtonClick(btn)"
+                        :class="btn.class"
+                        class="table-operate"
+                        :type="btn.type"
+                        :disabled="btn.disabled && btn.disabled(row, field)"
+                        v-bind="btn.attr"
+                    >
+                        <Icon :name="btn.icon" />
+                        <div v-if="btn.text" class="table-operate-text">{{ btn.text }}</div>
+                    </el-button>
+                </el-tooltip>
+                <el-popconfirm
+                    v-if="btn.render == 'confirmButton'"
+                    :disabled="btn.disabled && btn.disabled(row, field)"
+                    v-bind="btn.popconfirm"
+                    @confirm="onButtonClick(btn)"
+                >
+                    <template #reference>
+                        <div class="ml-6">
+                            <el-tooltip :disabled="btn.title ? false : true" :content="btn.title ? btn.title : ''" placement="top">
+                                <el-button
+                                    v-if="btn.name == 'delete'"
+                                    v-auth="'del'"
+                                    v-blur
+                                    :class="btn.class"
+                                    class="table-operate"
+                                    :type="btn.type"
+                                    :disabled="btn.disabled && btn.disabled(row, field)"
+                                    v-bind="btn.attr"
+                                >
+                                    <Icon :name="btn.icon" />
+                                    <div v-if="btn.text" class="table-operate-text">{{ btn.text }}</div>
+                                </el-button>
+                                <el-button
+                                    v-else
+                                    v-blur
+                                    :class="btn.class"
+                                    class="table-operate"
+                                    :type="btn.type"
+                                    :disabled="btn.disabled && btn.disabled(row, field)"
+                                    v-bind="btn.attr"
+                                >
+                                    <Icon :name="btn.icon" />
+                                    <div v-if="btn.text" class="table-operate-text">{{ btn.text }}</div>
+                                </el-button>
+                            </el-tooltip>
+                        </div>
+                    </template>
+                </el-popconfirm>
+                <el-tooltip
+                    v-if="btn.render == 'moveButton'"
+                    :disabled="btn.title && !btn.disabledTip ? false : true"
+                    :content="btn.title ? btn.title : ''"
+                    placement="top"
+                >
+                    <el-button
+                        v-if="btn.name == 'weigh-sort'"
+                        v-auth="'sortable'"
+                        :class="btn.class"
+                        class="table-operate move-button"
+                        :type="btn.type"
+                        :disabled="btn.disabled && btn.disabled(row, field)"
+                        v-bind="btn.attr"
+                    >
+                        <Icon :name="btn.icon" />
+                        <div v-if="btn.text" class="table-operate-text">{{ btn.text }}</div>
+                    </el-button>
+                    <el-button
+                        v-else
+                        v-blur
+                        :class="btn.class"
+                        class="table-operate move-button"
+                        :type="btn.type"
+                        :disabled="btn.disabled && btn.disabled(row, field)"
+                        v-bind="btn.attr"
+                    >
+                        <Icon :name="btn.icon" />
+                        <div v-if="btn.text" class="table-operate-text">{{ btn.text }}</div>
+                    </el-button>
+                </el-tooltip>
+            </template>
+        </template>
+    </div>
+</template>
+<script lang="ts" setup>
+import { defineComponent } from 'vue'
+let props = defineProps({
+    field: {
+        type: Object
+    }
+})
+</script>

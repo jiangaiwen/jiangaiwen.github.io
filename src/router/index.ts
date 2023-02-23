@@ -4,54 +4,28 @@ import Wrapper from '@/layouts/empty.vue';
 // 异步菜单
 export const asyncRoutes = [
     {
-        path: '/project',
-        name: '项目管理',
-        redirect: '/project/list',
+        path: '/table',
+        name: '表格展示',
+        redirect: '/table/list',
         component: Wrapper,
         meta: {
-            title: '项目管理',
+            title: '表格展示',
             icon: 'monitor'
         },
         children: [{
             path: 'list',
-            name: '项目列表',
-            component: () => import('@/views/Project/list.vue'),
+            name: '列表展示',
+            component: () => import('@/views/Table/list.vue'),
             meta: {
-                title: '项目列表',
+                title: '列表展示',
                 icon: 'star-filled'
             },
         }, {
-            path: 'group',
-            name: '项目分组',
-            component: () => import('@/views/Project/group.vue'),
+            path: 'form',
+            name: '表单展示',
+            component: () => import('@/views/Table/form.vue'),
             meta: {
-                title: '项目分组',
-                icon: 'star-filled'
-            },
-        }]
-    }, {
-        path: '/device',
-        name: '设备管理',
-        redirect: '/device/list',
-        component: Wrapper,
-        meta: {
-            title: '设备管理',
-            icon: 'message-box'
-        },
-        children: [{
-            path: 'list',
-            name: '设备列表',
-            component: () => import('@/views/Device/list.vue'),
-            meta: {
-                title: '设备列表',
-                icon: 'star-filled'
-            },
-        }, {
-            path: 'chart',
-            name: '设备统计',
-            component: () => import('@/views/Device/chart.vue'),
-            meta: {
-                title: '设备统计',
+                title: '表单展示',
                 icon: 'star-filled'
             },
         }]

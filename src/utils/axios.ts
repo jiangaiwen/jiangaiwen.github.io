@@ -8,6 +8,14 @@ const axios = Axios.create({
     timeout: 20000
 })
 
+/*
+ * 根据运行环境获取基础请求URL
+ */
+export const getUrl = (): string => {
+    const value: string = import.meta.env.VITE_AXIOS_BASE_URL as string
+    return value == 'getCurrentDomain' ? window.location.protocol + '//' + window.location.host : value
+}
+
 // 前置拦截器（发起请求之前的拦截）
 axios.interceptors.request.use(
     (response) => {

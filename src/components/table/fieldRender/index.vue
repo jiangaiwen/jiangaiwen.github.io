@@ -224,10 +224,52 @@
     </div>
 </template>
 <script lang="ts" setup>
-import { defineComponent } from 'vue'
-let props = defineProps({
-    field: {
-        type: Object
+import { ref, inject } from 'vue'
+import type { TagProps } from 'element-plus'
+import { timeFormat, openUrl } from '@/components/table'
+import { fullUrl, arrayFullUrl } from '@/utils/common'
+import type baTableClass from '@/utils/baTable'
+import { TableColumnCtx } from 'element-plus/es/components/table/src/table-column/defaults'
+
+const baTable = inject('baTable') as baTableClass
+
+interface Props {
+    row: TableRow
+    field: TableColumn
+    column: TableColumnCtx<TableRow>
+    index: number
+}
+const props = defineProps<Props>()
+
+// 字段值（单元格值）
+const fieldName = ref(props.field.prop)
+const fieldValue = ref(fieldName.value ? props.row[fieldName.value] : '')
+if (fieldName.value && fieldName.value.indexOf('.') > -1) {
+    let fieldNameArr = fieldName.value.split('.')
+    let val: any = ref(props.row[fieldNameArr[0]])
+    for (let index = 1; index < fieldNameArr.length; index++) {
+        val.value = val.value ? val.value[fieldNameArr[index]] ?? '' : ''
     }
-})
+    fieldValue.value = val.value
+}
+
+if (props.field.renderFormatter && typeof props.field.renderFormatter == 'function') {
+    fieldValue.value = props.field.renderFormatter(props.row, props.field, fieldValue.value, props.column, props.index)
+}
+
+const onChangeField = (value: any) => {
+    baTable.onTableAction('field-change', { value: value, ...props })
+}
+
+const onButtonClick = (btn: OptButton) => {
+    if (typeof btn.click === 'function') {
+        btn.click(props.row, props.field)
+        return
+    }
+    baTable.onTableAction(btn.name, props)
+}
+
+const getTagType = (value: string, custom: any): TagProps['type'] => {
+    return custom && custom[value] ? custom[value] : ''
+}
 </script>

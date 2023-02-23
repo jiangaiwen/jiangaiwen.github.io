@@ -5,6 +5,7 @@ import router from '@/router/index'
 import Icon from '@/components/icon/index.vue'
 import { useSiteConfig } from '@/stores/siteConfig'
 import { useTitle } from '@vueuse/core'
+import { getUrl } from './axios'
 
 export function registerIcons(app: App) {
     /*
@@ -110,4 +111,54 @@ export const isAdminApp = (path = '') => {
         greet = '您好！欢迎回来！'
     }
     return greet
+}
+
+/**
+ * 根据pk字段的值从数组中获取key
+ * @param arr
+ * @param pk
+ * @param value
+ */
+export const getArrayKey = (arr: any, pk: string, value: string): any => {
+    for (const key in arr) {
+        if (arr[key][pk] == value) {
+            return key
+        }
+    }
+    return false
+}
+
+/**
+ * 获取资源完整地址
+ * @param relativeUrl 资源相对地址
+ * @param domain 指定域名
+ */
+export const fullUrl = (relativeUrl: string, domain = '') => {
+    const siteConfig = useSiteConfig()
+    if (!domain) {
+        domain = siteConfig.cdnUrl ? siteConfig.cdnUrl : getUrl()
+    }
+    if (!relativeUrl) return domain
+
+    const regUrl = new RegExp(/^http(s)?:\/\//)
+    const regexImg = new RegExp(/^((?:[a-z]+:)?\/\/|data:image\/)(.*)/i)
+    if (!domain || regUrl.test(relativeUrl) || regexImg.test(relativeUrl)) {
+        return relativeUrl
+    }
+    return domain + relativeUrl
+}
+
+/**
+ * 获取一组资源的完整地址
+ * @param relativeUrls 资源相对地址
+ * @param domain 指定域名
+ */
+export const arrayFullUrl = (relativeUrls: string | string[], domain = '') => {
+    if (typeof relativeUrls === 'string') {
+        relativeUrls = relativeUrls == '' ? [] : relativeUrls.split(',')
+    }
+    for (const key in relativeUrls) {
+        relativeUrls[key] = fullUrl(relativeUrls[key], domain)
+    }
+    return relativeUrls
 }

@@ -30,6 +30,15 @@ export const asyncRoutes = [
             },
         }]
     }, {
+        path: '/FlowEditor',
+        name: '流程编辑器',
+        component: () => import('@/views/Editor/index.vue'),
+        children: [],
+        meta: {
+            title: '流程编辑器',
+            icon: 'MagicStick'
+        }
+    }, {
         path: '/icon',
         name: '图标管理',
         component: () => import('@/views/Icon.vue'),

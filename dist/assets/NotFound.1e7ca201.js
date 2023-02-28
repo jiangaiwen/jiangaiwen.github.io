@@ -1,0 +1,1 @@
+import{_ as e}from"./index.6a4f60aa.js";import{f as o,o as t,g as s}from"./vue.06dd128b.js";const c={},a={class:"full"},r=s("img",{src:"https://pic4.zhimg.com/v2-eb0a49586951e28073bc71e3a9983efa_r.jpg?source=1940ef5c",alt:""},null,-1),_=[r];function n(i,p,f,d,l,m){return t(),o("div",a,_)}var g=e(c,[["render",n]]);export{g as default};

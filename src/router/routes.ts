@@ -11,7 +11,7 @@ import ECharts from './modules/echarts'
 import Editor from './modules/editor'
 import Print from './modules/print'
 import Icon from './modules/icon'
-import Iframe from './modules/iframe'
+// import Iframe from './modules/iframe'
 import Other from './modules/other'
 
 // 固定路由（默认路由）
@@ -87,7 +87,7 @@ const asyncRoutes: Route.RouteRecordRaw[] = [
             ECharts,
             Print,
             Icon,
-            Iframe,
+            // Iframe,
             Css,
             Other
         ]

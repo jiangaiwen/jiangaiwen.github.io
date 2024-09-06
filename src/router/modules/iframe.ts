@@ -21,25 +21,23 @@ const routes: RouteRecordRaw = {
             title: 'Excalidraw',
             icon: 'star-filled'
         }
-    }
-    // , {
-    //     path: 'nv_ppt',
-    //     name: 'PPT',
-    //     component: () => import('@/views/nv_iframe/nv_ppt/index.vue'),
-    //     meta: { 
-    //         title: 'PPT',
-    //         icon: 'star-filled'
-    //     }
-    // }, {
-    //     path: 'nv_export_excel',
-    //     name: '导出Excel',
-    //     component: () => import('@/views/nv_excel/nv_export_excel/index.vue'),
-    //     meta: { 
-    //         title: '导出Excel',
-    //         icon: 'star-filled'
-    //     }
-    // }
-]
+    }, {
+        path: 'nv_ppt',
+        name: 'PPT',
+        component: () => import('@/views/nv_iframe/nv_ppt/index.vue'),
+        meta: { 
+            title: 'PPT',
+            icon: 'star-filled'
+        }
+    }, {
+        path: 'nv_export_excel',
+        name: '导出Excel',
+        component: () => import('@/views/nv_excel/nv_export_excel/index.vue'),
+        meta: { 
+            title: '导出Excel',
+            icon: 'star-filled'
+        }
+    }]
 }
 
 export default routes

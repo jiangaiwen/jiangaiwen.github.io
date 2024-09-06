@@ -1,9 +1,0 @@
-
-    /**
-     * 由 Fantastic-admin 提供技术支持
-     * Powered by Fantastic-admin
-     * Gitee  https://fantastic-admin.gitee.io
-     * Github https://fantastic-admin.github.io
-     */
-    
-import{d as m,ax as b,ay as f,v as g,k as v,n as t,B as h,g as r,e as o,c as i,a8 as _,a3 as k,H as c,i as w,f as x,an as y,ae as V,A as B}from"./index-C-3tFKuV.js";const C={class:"w-full inline-flex"},M=["disabled"],S={class:"block truncate"},$={class:"pointer-events-none absolute end-0 inset-y-0 flex items-center pe-2.5"},z={class:"max-h-60 w-full scroll-py-1 overflow-y-auto p-1 lg:w-48 focus:outline-none"},H=["disabled","onClick"],E=m({__name:"HSelect",props:b({options:{},disabled:{type:Boolean,default:!1}},{modelValue:{},modelModifiers:{}}),emits:["update:modelValue"],setup(a){const l=a,n=f(a,"modelValue"),d=g({get(){return l.options.find(e=>e.value===n.value)??l.options[0]},set(e){n.value=e.value}});return(e,N)=>{const u=V,p=v("VMenu");return t(),h(p,y({triggers:["click"],"popper-triggers":["click"],delay:0,disabled:e.disabled},e.$attrs),{popper:r(()=>[o("div",z,[(t(!0),i(k,null,_(e.options,s=>(t(),i("button",{key:s.value,disabled:s.disabled,class:B(["w-full cursor-pointer truncate border-size-0 rounded-md bg-inherit px-2 py-1.5 text-left text-sm disabled:cursor-not-allowed hover:not-disabled:bg-stone-1 dark:hover:not-disabled:bg-stone-9",{"font-bold":a.modelValue===s.value}]),onClick:A=>d.value=s},c(s.label),11,H))),128))])]),default:r(()=>[o("div",C,[o("button",{class:"relative block w-full flex cursor-default items-center gap-x-2 border-0 rounded-md bg-white px-2.5 py-1.5 pe-9 text-left text-sm shadow-sm ring-1 ring-stone-2 ring-inset lg:w-48 disabled:cursor-not-allowed dark:bg-dark focus:outline-none focus:ring-2 dark:ring-stone-8 focus:ring-ui-primary",disabled:e.disabled},[o("span",S,c(w(d).label),1),o("span",$,[x(u,{name:"i-carbon:chevron-down",class:"h-5 w-5 flex-shrink-0 text-stone-5"})])],8,M)])]),_:1},16,["disabled"])}}});export{E as default};

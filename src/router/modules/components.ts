@@ -12,15 +12,7 @@ const routes: RouteRecordRaw = {
         title: '组件',
         icon: 'grid'
     },
-    children: [{
-        path: 'nv_map',
-        name: '高德地图',
-        component: () => import('@/views/nv_components/nv_map/index.vue'),
-        meta: {
-            title: '高德地图',
-            icon: 'star-filled'
-        }
-    }, {
+    children: [ {
         path: 'nv_mapbox',
         name: 'mapbox',
         component: () => import('@/views/nv_components/nv_mapbox/index.vue'),

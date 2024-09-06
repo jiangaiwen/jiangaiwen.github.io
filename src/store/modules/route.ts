@@ -120,7 +120,7 @@ const useRouteStore = defineStore(
             })
             if (isUsedDeprecatedAttribute) {
                 // turbo-console-disable-next-line
-                console.warn('[Fantastic-admin] 路由配置中的 "sidebar" 属性即将被弃用, 请尽快替换为 "menu" 属性')
+                console.warn('路由配置中的 "sidebar" 属性即将被弃用, 请尽快替换为 "menu" 属性')
             }
             return routes
         }

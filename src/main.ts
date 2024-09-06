@@ -1,6 +1,6 @@
 import '@/utils/baidu'
 
-import '@/utils/system.copyright'
+// import '@/utils/system.copyright'
 
 import FloatingVue from 'floating-vue'
 import 'floating-vue/dist/style.css'

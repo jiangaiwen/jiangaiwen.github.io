@@ -1,13 +1,12 @@
 <script setup lang="ts">
 import type { FormInstance, FormRules } from 'element-plus'
-import { ElMessage } from 'element-plus'
 import Copyright from '@/layouts/components/Copyright/index.vue'
 import useSettingsStore from '@/store/modules/settings'
 import useUserStore from '@/store/modules/user'
 import * as pageBubble from '@/utils/pageBubble';
 
 defineOptions({
-  name: 'Login',
+    name: 'Login',
 })
 var timer: NodeJS.Timer
 const route = useRoute()

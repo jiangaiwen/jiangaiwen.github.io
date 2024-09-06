@@ -1,0 +1,9 @@
+
+    /**
+     * 由 Fantastic-admin 提供技术支持
+     * Powered by Fantastic-admin
+     * Gitee  https://fantastic-admin.gitee.io
+     * Github https://fantastic-admin.github.io
+     */
+    
+import{_ as u}from"./HDropdownMenu.vue_vue_type_script_setup_true_lang-BqANLFKP.js";import{d as f,m as p,u as d,a as h,r as g,x as v,n as a,c as i,i as e,B as o,F as n,f as m,g as b,e as x,q as S,H as k,aj as y,ae as B}from"./index-C-3tFKuV.js";import{_ as $}from"./index.vue_vue_type_script_setup_true_lang-B6HdG9QB.js";import{_ as w}from"./index.vue_vue_type_script_setup_true_lang-BqC8Pxqp.js";import{_ as N}from"./index.vue_vue_type_script_setup_true_lang-CkZKu9DC.js";import{_ as V}from"./index.vue_vue_type_script_setup_true_lang-laPkqLDy.js";const C={class:"flex items-center"},D={class:"flex-center gap-1"},E=["src","onerror"],P=f({name:"Tools",__name:"rightSide",setup(H){const l=p(),t=d(),s=h(),r=g(!1);return v(()=>s.avatar,()=>{r.value&&(r.value=!1)}),(R,T)=>{const c=B,_=u;return a(),i("div",C,[e(t).settings.toolbar.navSearch?(a(),o($,{key:0})):n("",!0),e(t).settings.toolbar.fullscreen?(a(),o(w,{key:1})):n("",!0),e(t).settings.toolbar.pageReload?(a(),o(N,{key:2})):n("",!0),e(t).settings.toolbar.colorScheme?(a(),o(V,{key:3})):n("",!0),m(_,{items:[[{label:e(t).settings.home.title,handle:()=>e(l).push({path:e(t).settings.home.fullPath}),hide:!e(t).settings.home.enable},{label:"个人设置",handle:()=>e(l).push({name:"personalSetting"})}],[{label:"快捷键介绍",handle:()=>e(y).emit("global-hotkeys-intro-toggle"),hide:e(t).mode!=="pc"}],[{label:"退出登录",handle:()=>e(s).logout()}]],class:"flex-center cursor-pointer px-2"},{default:b(()=>[x("div",D,[e(s).avatar&&!e(r)?(a(),i("img",{key:0,src:e(s).avatar,onerror:()=>r.value=!0,class:"h-[24px] w-[24px] rounded-full"},null,8,E)):(a(),o(c,{key:1,name:"i-carbon:user-avatar-filled-alt",size:24,class:"text-gray-400"})),S(" "+k(e(s).account)+" ",1),m(c,{name:"i-ep:caret-bottom"})])]),_:1},8,["items"])])}}});export{P as _};

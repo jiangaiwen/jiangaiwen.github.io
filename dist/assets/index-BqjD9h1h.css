@@ -1,0 +1,9 @@
+
+    /**
+     * 由 Fantastic-admin 提供技术支持
+     * Powered by Fantastic-admin
+     * Gitee  https://fantastic-admin.gitee.io
+     * Github https://fantastic-admin.github.io
+     */
+    
+.topbar-container[data-v-cf82b33b]{position:absolute;top:0;z-index:999;display:flex;flex-direction:column;box-shadow:0 1px 0 0 var(--g-border-color);transition:width .3s,top .3s,transform .3s,box-shadow .3s}.topbar-container.topbar-fixed[data-v-cf82b33b],.topbar-container.topbar-sticky[data-v-cf82b33b]{position:fixed}.topbar-container.topbar-fixed.shadow[data-v-cf82b33b],.topbar-container.topbar-sticky.shadow[data-v-cf82b33b]{box-shadow:0 10px 10px -10px var(--g-box-shadow-color)}.topbar-container.topbar-sticky.hide[data-v-cf82b33b]{top:calc((var(--g-tabbar-height) + var(--g-toolbar-height)) * -1)!important}

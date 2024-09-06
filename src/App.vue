@@ -1,31 +1,76 @@
-<template>
-    <el-config-provider :locale="locale">
-        <router-view v-if="$route.path === '/login'"></router-view>
-        <layout v-else></layout>
-    </el-config-provider>
-</template>
 <script setup lang="ts">
-import { onMounted, ref, computed, watch } from 'vue';
-import iconfontInit from '@/utils/iconfont';
-import { useRoute } from 'vue-router';
-import { setTitleFromRoute } from '@/utils/common'
-import layout from '@/layouts/index.vue';
-import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
-import en from 'element-plus/dist/locale/en.mjs'
+import hotkeys from 'hotkeys-js'
+import eventBus from './utils/eventBus'
+import Provider from './ui-provider/index.vue'
+import useSettingsStore from '@/store/modules/settings'
 
-const language = ref('zh-cn')
-const locale = computed(() => (language.value === 'zh-cn' ? zhCn : en))
 const route = useRoute()
+const settingsStore = useSettingsStore()
+const { auth } = useAuth()
 
-onMounted(() => {
-    iconfontInit()
+const isAuth = computed(() => {
+    return route.matched.every((item) => {
+        return auth(item.meta.auth ?? '')
+    })
 })
 
-// 监听路由变化时更新浏览器标题
-watch(
-    () => route.path,
-    () => {
-        setTitleFromRoute()
+// 侧边栏主导航当前实际宽度
+const mainSidebarActualWidth = computed(() => {
+    let actualWidth = Number.parseInt(getComputedStyle(document.documentElement).getPropertyValue('--g-main-sidebar-width'))
+    if (settingsStore.settings.menu.menuMode === 'single' || (settingsStore.settings.menu.menuMode === 'head' && settingsStore.mode !== 'mobile')) {
+        actualWidth = 0
     }
-)
+    return `${actualWidth}px`
+})
+
+// 侧边栏次导航当前实际宽度
+const subSidebarActualWidth = computed(() => {
+    let actualWidth = Number.parseInt(getComputedStyle(document.documentElement).getPropertyValue('--g-sub-sidebar-width'))
+    if (settingsStore.settings.menu.subMenuCollapse && settingsStore.mode !== 'mobile') {
+        actualWidth = Number.parseInt(getComputedStyle(document.documentElement).getPropertyValue('--g-sub-sidebar-collapse-width'))
+    }
+    return `${actualWidth}px`
+})
+
+// 设置网页 title
+watch([
+    () => settingsStore.settings.app.enableDynamicTitle,
+    () => settingsStore.title,
+], () => {
+    if (settingsStore.settings.app.enableDynamicTitle && settingsStore.title) {
+        const title = typeof settingsStore.title === 'function' ? settingsStore.title() : settingsStore.title
+        document.title = `${title} - ${import.meta.env.VITE_APP_TITLE}`
+    }
+    else {
+        document.title = import.meta.env.VITE_APP_TITLE
+    }
+}, {
+    immediate: true,
+    deep: true,
+})
+
+onMounted(() => {
+    settingsStore.setMode(document.documentElement.clientWidth)
+    window.addEventListener('resize', () => {
+        settingsStore.setMode(document.documentElement.clientWidth)
+    })
+    hotkeys('alt+i', () => {
+        eventBus.emit('global-system-info-toggle')
+    })
+})
 </script>
+<template>
+    <Provider>
+        <RouterView
+            v-slot="{ Component }"
+            :style="{
+                '--g-main-sidebar-actual-width': mainSidebarActualWidth,
+                '--g-sub-sidebar-actual-width': subSidebarActualWidth,
+            }"
+        >
+            <component :is="Component" v-if="isAuth" />
+            <NotAllowed v-else />
+        </RouterView>
+        <SystemInfo />
+    </Provider>
+</template>
